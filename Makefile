@@ -6,7 +6,7 @@
 #    By: vvlasenk <vvlasenk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/28 14:01:28 by vvlasenk          #+#    #+#              #
-#    Updated: 2019/03/28 14:16:25 by vvlasenk         ###   ########.fr        #
+#    Updated: 2019/03/28 14:23:56 by vvlasenk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME 	=	scop
 LIBFT	=	libft.a
 
 GCC		=	gcc
-WWW		=	-Wall -Wextra -Werror
+WWW		=	
+			# -Wall -Wextra -Werror
 IGRAPH	=	
 			# -L/usr/local/lib/ -I/usr/local/include -lmlx -framework OpenGL \
 			# -framework AppKit
