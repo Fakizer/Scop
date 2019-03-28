@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scop.h                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvlasenk <vvlasenk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvlasenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/14 17:18:00 by vvlasenk          #+#    #+#             */
-/*   Updated: 2019/03/28 14:14:23 by vvlasenk         ###   ########.fr       */
+/*   Created: 2016/11/21 13:37:35 by vvlasenk          #+#    #+#             */
+/*   Updated: 2016/11/21 13:37:40 by vvlasenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCOP_H
-# define SCOP_H
-
-#include <stdio.h>
 #include "libft.h"
 
+size_t		ft_strlen(const char *str)
+{
+	size_t i;
 
-
-#endif
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}

@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scop.h                                             :+:      :+:    :+:   */
+/*   ft_nbrlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvlasenk <vvlasenk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvlasenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/14 17:18:00 by vvlasenk          #+#    #+#             */
-/*   Updated: 2019/03/28 14:14:23 by vvlasenk         ###   ########.fr       */
+/*   Created: 2016/11/27 16:24:30 by vvlasenk          #+#    #+#             */
+/*   Updated: 2016/11/27 16:24:32 by vvlasenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCOP_H
-# define SCOP_H
-
-#include <stdio.h>
 #include "libft.h"
 
+size_t		ft_nbrlen(int nb)
+{
+	int		i;
 
-
-#endif
+	i = 0;
+	if (nb <= 0)
+		i++;
+	while (nb)
+	{
+		nb /= 10;
+		i++;
+	}
+	return (i);
+}

@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scop.h                                             :+:      :+:    :+:   */
+/*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vvlasenk <vvlasenk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/14 17:18:00 by vvlasenk          #+#    #+#             */
-/*   Updated: 2019/03/28 14:14:23 by vvlasenk         ###   ########.fr       */
+/*   Created: 2016/11/24 15:55:11 by vvlasenk          #+#    #+#             */
+/*   Updated: 2017/10/19 21:03:43 by vvlasenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCOP_H
-# define SCOP_H
-
-#include <stdio.h>
 #include "libft.h"
 
+char	*ft_strnew(size_t size)
+{
+	char *str;
 
-
-#endif
+	str = (char*)malloc(sizeof(char) * (size + 1));
+	if (str == NULL)
+		return (0);
+	ft_bzero(str, size + 1);
+	return (str);
+}

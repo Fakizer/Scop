@@ -1,21 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scop.h                                             :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvlasenk <vvlasenk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvlasenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/14 17:18:00 by vvlasenk          #+#    #+#             */
-/*   Updated: 2019/03/28 14:14:23 by vvlasenk         ###   ########.fr       */
+/*   Created: 2016/11/21 15:45:27 by vvlasenk          #+#    #+#             */
+/*   Updated: 2016/11/21 15:45:28 by vvlasenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCOP_H
-# define SCOP_H
-
-#include <stdio.h>
 #include "libft.h"
 
+char	*ft_strncpy(char *dest, const char *src, size_t num)
+{
+	size_t i;
 
-
-#endif
+	i = 0;
+	while (num)
+	{
+		dest[i] = src[i];
+		if (src[i] == '\0')
+		{
+			while (num)
+			{
+				dest[i] = '\0';
+				i++;
+				num--;
+			}
+			break ;
+		}
+		i++;
+		num--;
+	}
+	return (dest);
+}

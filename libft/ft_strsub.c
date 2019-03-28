@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scop.h                                             :+:      :+:    :+:   */
+/*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvlasenk <vvlasenk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvlasenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/14 17:18:00 by vvlasenk          #+#    #+#             */
-/*   Updated: 2019/03/28 14:14:23 by vvlasenk         ###   ########.fr       */
+/*   Created: 2016/11/24 15:57:05 by vvlasenk          #+#    #+#             */
+/*   Updated: 2016/11/24 15:57:05 by vvlasenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCOP_H
-# define SCOP_H
-
-#include <stdio.h>
 #include "libft.h"
 
+char	*ft_strsub(char const *s, unsigned int start, size_t len)
+{
+	char *str;
 
-
-#endif
+	str = ft_strnew(len);
+	if (str == NULL)
+		return (0);
+	ft_strncpy(str, &s[start], len);
+	return (str);
+}

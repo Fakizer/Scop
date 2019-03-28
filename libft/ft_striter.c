@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scop.h                                             :+:      :+:    :+:   */
+/*   ft_striter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvlasenk <vvlasenk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvlasenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/14 17:18:00 by vvlasenk          #+#    #+#             */
-/*   Updated: 2019/03/28 14:14:23 by vvlasenk         ###   ########.fr       */
+/*   Created: 2016/11/24 15:55:41 by vvlasenk          #+#    #+#             */
+/*   Updated: 2016/11/24 15:55:42 by vvlasenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCOP_H
-# define SCOP_H
-
-#include <stdio.h>
 #include "libft.h"
 
+void	ft_striter(char *s, void (*f)(char *))
+{
+	size_t i;
 
-
-#endif
+	i = 0;
+	while (s[i])
+	{
+		(*f)(&s[i]);
+		i++;
+	}
+}

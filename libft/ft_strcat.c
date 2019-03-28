@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scop.h                                             :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvlasenk <vvlasenk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvlasenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/14 17:18:00 by vvlasenk          #+#    #+#             */
-/*   Updated: 2019/03/28 14:14:23 by vvlasenk         ###   ########.fr       */
+/*   Created: 2016/11/21 15:52:13 by vvlasenk          #+#    #+#             */
+/*   Updated: 2016/11/21 15:52:14 by vvlasenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCOP_H
-# define SCOP_H
-
-#include <stdio.h>
 #include "libft.h"
 
+char	*ft_strcat(char *dest, const char *src)
+{
+	size_t i;
+	size_t len;
 
-
-#endif
+	i = 0;
+	len = ft_strlen(dest);
+	while (src[i] != '\0')
+	{
+		dest[len] = src[i];
+		i++;
+		len++;
+	}
+	dest[len] = '\0';
+	return (dest);
+}

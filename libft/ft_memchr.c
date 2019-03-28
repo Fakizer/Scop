@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scop.h                                             :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvlasenk <vvlasenk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvlasenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/14 17:18:00 by vvlasenk          #+#    #+#             */
-/*   Updated: 2019/03/28 14:14:23 by vvlasenk         ###   ########.fr       */
+/*   Created: 2016/11/24 11:01:22 by vvlasenk          #+#    #+#             */
+/*   Updated: 2016/11/24 11:01:23 by vvlasenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCOP_H
-# define SCOP_H
-
-#include <stdio.h>
 #include "libft.h"
 
+void	*ft_memchr(const void *memptr, int val, size_t num)
+{
+	char *my_memptr;
 
-
-#endif
+	my_memptr = (void*)memptr;
+	if (num == 0)
+		return (0);
+	while (num)
+	{
+		if (*my_memptr == val)
+			return (my_memptr);
+		num--;
+		my_memptr++;
+	}
+	return (0);
+}

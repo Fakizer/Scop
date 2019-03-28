@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scop.h                                             :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvlasenk <vvlasenk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvlasenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/14 17:18:00 by vvlasenk          #+#    #+#             */
-/*   Updated: 2019/03/28 14:14:23 by vvlasenk         ###   ########.fr       */
+/*   Created: 2016/11/24 15:59:46 by vvlasenk          #+#    #+#             */
+/*   Updated: 2016/11/24 15:59:47 by vvlasenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCOP_H
-# define SCOP_H
-
-#include <stdio.h>
 #include "libft.h"
 
-
-
-#endif
+void	ft_putnbr(int n)
+{
+	if (n == -2147483648)
+		write(1, "-2147483648", 11);
+	else
+	{
+		if (0 > n)
+		{
+			ft_putchar('-');
+			n = -n;
+		}
+		if (n >= 10)
+		{
+			ft_putnbr(n / 10);
+			ft_putnbr(n % 10);
+		}
+		else
+			ft_putchar(n + '0');
+	}
+}

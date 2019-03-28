@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvlasenk <vvlasenk@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vvlasenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/14 17:19:00 by vvlasenk          #+#    #+#             */
-/*   Updated: 2018/04/14 17:19:00 by vvlasenk         ###   ########.fr       */
+/*   Created: 2016/11/27 17:09:33 by vvlasenk          #+#    #+#             */
+/*   Updated: 2016/11/27 17:09:34 by vvlasenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scop.h"
+#include "libft.h"
 
-int 		main()
+void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	
-	return (0);
+	while (lst)
+	{
+		(*f)(lst);
+		lst = lst->next;
+	}
 }

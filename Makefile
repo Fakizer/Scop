@@ -6,7 +6,7 @@
 #    By: vvlasenk <vvlasenk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/28 14:01:28 by vvlasenk          #+#    #+#              #
-#    Updated: 2019/03/28 14:10:21 by vvlasenk         ###   ########.fr        #
+#    Updated: 2019/03/28 14:16:25 by vvlasenk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,8 +50,8 @@ SRCDIR	=	./sources/
 
 all: $(NAME)
 
-$(NAME):	$(LIBFT) $(OBJDIRS) $(OBJRTV1)
-			$(GCC) -o $@ $(IGRAPH) $(OBJRTV1) $(LIBFT)
+$(NAME):	$(LIBFT) $(OBJDIRS) $(OBJSCO)
+			$(GCC) -o $@ $(IGRAPH) $(OBJSCO) $(LIBFT)
 
 $(LIBFT):	$(OBJDIRL) $(OBJLIB)
 			ar rc $(LIBFT) $(OBJLIB)
