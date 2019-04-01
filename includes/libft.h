@@ -25,6 +25,7 @@ typedef	struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+int					ft_words(char const *str, char c);
 void				*ft_memset(void *memptr, int val, size_t num);
 void				ft_bzero(void *str, size_t n);
 void				*ft_memcpy(void *dest, const void *src, size_t num);

@@ -51,17 +51,8 @@ SRCDIR	=	./sources/
 
 all: $(NAME)
 
-$(NAME):	$(LIBFT) $(OBJDIRS) $(OBJSCO)
+$(NAME): 	$(OBJDIRS) $(OBJSCO)
 			$(GCC) -o $@ $(IGRAPH) $(OBJSCO) $(LIBFT)
-
-$(LIBFT):	$(OBJDIRL) $(OBJLIB)
-			ar rc $(LIBFT) $(OBJLIB)
-
-$(OBJDIRL):
-			mkdir -p $@
-
-$(OBJDIRL)%.o:$(LIBFTDIR)%.c
-			$(GCC) $(WWW) $(INCLUDES) -o $@ -c $<
 
 $(OBJDIRS):
 			mkdir -p $@
@@ -70,9 +61,37 @@ $(OBJDIRS)%.o:$(SRCDIR)%.c
 			$(GCC) $(WWW) $(INCLUDES) -o $@ -c $<
 
 clean:
-	rm -rf $(OBJLIB) $(OBJDIRL) $(OBJSCO) $(OBJDIRS)
+	rm -rf $(OBJSCO) $(OBJDIRS)
 
 fclean: clean
-	rm -f $(NAME) $(LIBFT)
+	rm -f $(NAME) bitmapImage.bmp
 
 re: fclean all
+
+# all: $(NAME)
+
+# $(NAME):	$(LIBFT) $(OBJDIRS) $(OBJSCO)
+# 			$(GCC) -o $@ $(IGRAPH) $(OBJSCO) $(LIBFT)
+
+# $(LIBFT):	$(OBJDIRL) $(OBJLIB)
+# 			ar rc $(LIBFT) $(OBJLIB)
+
+# $(OBJDIRL):
+# 			mkdir -p $@
+
+# $(OBJDIRL)%.o:$(LIBFTDIR)%.c
+# 			$(GCC) $(WWW) $(INCLUDES) -o $@ -c $<
+
+# $(OBJDIRS):
+# 			mkdir -p $@
+
+# $(OBJDIRS)%.o:$(SRCDIR)%.c
+# 			$(GCC) $(WWW) $(INCLUDES) -o $@ -c $<
+
+# clean:
+# 	rm -rf $(OBJLIB) $(OBJDIRL) $(OBJSCO) $(OBJDIRS)
+
+# fclean: clean
+# 	rm -f $(NAME) $(LIBFT)
+
+# re: fclean all
