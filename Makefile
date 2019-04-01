@@ -20,7 +20,7 @@ IGRAPH	=
 			# -L/usr/local/lib/ -I/usr/local/include -lmlx -framework OpenGL \
 			# -framework AppKit
 
-SRCSCO	=	main.c
+SRCSCO	=	main.c bmpcreater.c
 
 SRCLIB	=	ft_memset.c ft_memcpy.c ft_memchr.c ft_memcmp.c \
 			ft_strcmp.c ft_bzero.c ft_memmove.c ft_strlen.c \
