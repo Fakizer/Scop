@@ -16,6 +16,28 @@ const int bytesPerPixel = 3; /// red, green, blue
 const int fileHeaderSize = 14;
 const int infoHeaderSize = 40;
 
+unsigned char    set_image_data(int width, int height, t_main *data) {
+    unsigned char image[height][width][bytesPerPixel];
+    
+    for (int i= 0; i < data->f_numb; i++) {
+        t_f face = data->f[i];
+        for (int j = 0; j < 3; j++) {
+            switch (j)
+            {
+                case 0:
+                    t_v v0 = data->v[face.v1];
+                    break;
+            
+                default:
+                    break;
+            }
+            // t_v v0 = data->v[face[j]];
+        }
+    }
+
+    return (image);
+}
+
 void    set_data_f(char *filename, char *flag, t_f *data) {
     char    *scene;
     int     size = 0;
@@ -27,7 +49,7 @@ void    set_data_f(char *filename, char *flag, t_f *data) {
     fd = open(filename, O_RDONLY);
     while ((ret = get_next_line(fd, &scene)) > 0)
 	{
-        if (ft_strstr(scene, "v ")) {
+        if (ft_strstr(scene, "f ")) {
             char_vect = ft_strsplit(scene, ' ');
             data[i].v1 = atoi(char_vect[1]);
             data[i].v2 = atoi(char_vect[2]);
@@ -101,13 +123,14 @@ void    parser(char *filename, t_main  *main_data) {
     int         size_f = 0;
 
 	size_v = counter(filename, "v ");
+    main_data->v_numb = size_v;
     main_data->v = (t_v*)malloc(sizeof(t_v) * size_v);
     set_data_v(filename, "v ", main_data->v);
 
     size_f = counter(filename, "f ");
+    main_data->f_numb = size_f;
     main_data->f = (t_f*)malloc(sizeof(t_f) * size_f);
     set_data_f(filename, "f ", main_data->f);
-
     printf("# v# %d f# %d\n", size_v, size_f);
 }
 
@@ -121,7 +144,8 @@ int main(int argc, char** argv)
     }
     pointer_struct_creater();
     parser(argv[1], main_data);
-    createImage(1920, 1080);
+    main_data->image = set_image_data(1920, 1080, main_data);
+    createImage(1920, 1080, main_data);
     printf("%s\n", "--------------- End     program ---------------");
     return 0;
 }

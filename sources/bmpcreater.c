@@ -1,21 +1,21 @@
 #include "scop.h"
 
-void createImage(int my_width, int my_height) {
+void createImage(int my_width, int my_height, t_main *data) {
     int height = my_height;
     int width = my_width;
     unsigned char image[height][width][bytesPerPixel];
     char* imageFileName = "bitmapImage.bmp";
 
     int i, j;
-    for(i=0; i<height; i++){
-        for(j=0; j<width; j++){
-            image[i][j][2] = (unsigned char)((double)i/height*255); ///red
-            image[i][j][1] = (unsigned char)((double)j/width*255); ///green
-            image[i][j][0] = (unsigned char)(((double)i+j)/(height+width)*255); ///blue
-        }
-    }
+    // for(i=0; i<height; i++){
+    //     for(j=0; j<width; j++){
+    //         image[i][j][2] = (unsigned char)((double)i/height*255); ///red
+    //         image[i][j][1] = (unsigned char)((double)j/width*255); ///green
+    //         image[i][j][0] = (unsigned char)(((double)i+j)/(height+width)*255); ///blue
+    //     }
+    // }
 
-    generateBitmapImage((unsigned char *)image, height, width, imageFileName);
+    generateBitmapImage((unsigned char *)data->image, height, width, imageFileName);
     printf("Image generated!!\n");
 }
 

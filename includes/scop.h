@@ -40,8 +40,11 @@ typedef struct  s_v
 
 typedef struct  s_main
 {
+    int         v_numb;
     t_v         *v;
+    int         f_numb;
     t_f         *f;
+    unsigned char ***image;
 }               t_main;
 
 
@@ -49,7 +52,7 @@ extern const int bytesPerPixel; /// red, green, blue
 extern const int fileHeaderSize;
 extern const int infoHeaderSize;
 
-void            createImage(int my_width, int my_height);
+void            createImage(int my_width, int my_height, t_main *data);
 void            generateBitmapImage(unsigned char *image, int height, int width, char* imageFileName);
 unsigned char*  createBitmapFileHeader(int height, int width, int paddingSize);
 unsigned char*  createBitmapInfoHeader(int height, int width);
