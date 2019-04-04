@@ -24,27 +24,36 @@
 # include <stdio.h>
 # include <time.h>
 
+typedef struct  s_face
+{
+    int         n_verts;
+    int         *face;
+}               t_face;
+
+
 typedef struct  s_f
 {
-    int         v1;
-    int         v2;
-    int         v3;
+    t_face      **faces;
+    int         n_face;
 }               t_f;
+
+typedef struct  s_vert
+{
+    int         n_dots;
+    int         *vert;
+}               t_vert;
 
 typedef struct  s_v
 {
-    float       dot1;
-    float       dot2;
-    float       dot3;
+    int         n_vert;
+    t_vert       **verts;
 }               t_v;
 
 typedef struct  s_main
 {
-    int         v_numb;
+    unsigned char *data;
     t_v         *v;
-    int         f_numb;
     t_f         *f;
-    unsigned char ***image;
 }               t_main;
 
 
