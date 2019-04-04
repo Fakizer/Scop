@@ -16,28 +16,41 @@ const int bytesPerPixel = 3; /// red, green, blue
 const int fileHeaderSize = 14;
 const int infoHeaderSize = 40;
 
-void    set_data_f(char *filename, char *flag, t_f *data) {
+void    set_data_f(char *filename, char *flag, t_f *f) {
     char    *scene;
     int     size = 0;
     int     fd = 0;
     int     ret = 0;
     int     i = 0;
     char    **char_vect;
+    t_face  *face;
 
     fd = open(filename, O_RDONLY);
+    face = (t_face*)malloc(sizeof(t_face));
     while ((ret = get_next_line(fd, &scene)) > 0)
 	{
-        if (ft_strstr(scene, "f ")) {
+        // printf("%s\n", scene);
+        if (ft_strstr(scene, flag)) {
             char_vect = ft_strsplit(scene, ' ');
+            face->n_verts = ft_words(scene, ' ') - 1;
+            face->verts = (int*)malloc(sizeof(int) * face->n_verts);
             int j = 0;
-            int len = ft_words(scene, ' ') - 1;
-            data->n_verts = len;
-            data->verts = (int*)malloc(sizeof(int) * len);
-            while (j < len)
+            while (j < face->n_verts)
             {
-                data->verts[j] = atoi(char_vect[j+1]);
+                face->verts[j] = atoi(char_vect[j+1]);
                 j++;
             }
+            printf("%d | %d | %d \n", face->verts[0], face->verts[1], face->verts[2]);
+            f->faces[i] = face;
+            free(face->verts);
+            j = 0;
+            while (j < face->n_verts + 1) 
+            {
+                free(char_vect[j]);
+                j++;
+            }
+            free(char_vect);
+            printf("------------------------1 | %d | %d\n", i, face->n_verts);
             i++;
         }
 		free(scene);
@@ -45,34 +58,34 @@ void    set_data_f(char *filename, char *flag, t_f *data) {
     if (scene != NULL) {
         free(scene);
     }
-    printf("set_data_f\n");
     close(fd);
 }
 
-void    set_data_v(char *filename, char *flag, t_v *data) {
+void    set_data_v(char *filename, char *flag, t_v *v) {
     char    *scene;
     int     size = 0;
     int     fd = 0;
     int     ret = 0;
     int     i = 0;
     char    **char_vect;
+    t_vert *vert;
 
     fd = open(filename, O_RDONLY);
     while ((ret = get_next_line(fd, &scene)) > 0)
 	{
-        if (ft_strstr(scene, "v ")) {
+        if (ft_strstr(scene, flag)) {
             char_vect = ft_strsplit(scene, ' ');
+            vert = (t_vert*)malloc(sizeof(t_vert));
+            vert->n_dots = ft_words(scene, ' ') - 1;
+            vert->dots = (float*)malloc(sizeof(float) * vert->n_dots);
             int j = 0;
-            int len = ft_words(scene, ' ') - 1;
-            data->dots = (float*)malloc(sizeof(float) * len);
-            if (data->dots == NULL)
-                printf("data->dots = NULL\n");
-            while (j < len)
+            while (j < vert->n_dots)
             {
-                data->dots[j] = atof(char_vect[j+1]);
-                printf("%f\n", data->dots[0]);
+                vert->dots[j] = atof(char_vect[j+1]);
                 j++;
             }
+            v->verts[i] = vert;
+            // printf("------------------------1 | %d | %d\n", i, vert->n_dots);
             i++;
         }
 		free(scene);
@@ -80,7 +93,6 @@ void    set_data_v(char *filename, char *flag, t_v *data) {
     if (scene != NULL) {
         free(scene);
     }
-    printf("set_data_v\n");
     close(fd);
 }
 
@@ -107,30 +119,45 @@ int     counter(char *filename, char *flag) {
     return (size);
 }
 
-void    pointer_struct_creater() {
-
-}
-
 void    parser(char *filename, t_main  *main_data) {
     char		*scene;
     int         size_v = 0;
     int         size_f = 0;
 
+    printf("set_data_v start;\n");
 	size_v = counter(filename, "v ");
-    main_data->n_vert = size_v;
-    main_data->v = (t_v*)malloc(sizeof(t_v) * size_v);
+    main_data->v->n_vert = size_v;
+    main_data->v->verts = (t_vert**)malloc(sizeof(t_vert*) * size_v);
+    int i = 0;
     set_data_v(filename, "v ", main_data->v);
+    printf("set_data_v end;\n");
 
-    // printf("%f\n", main_data->v[0]->dots[0]);
-
+    printf("set_data_f start;\n");
     size_f = counter(filename, "f ");
-    main_data->n_face = size_f;
-    main_data->f = (t_f*)malloc(sizeof(t_f) * size_f);
+    main_data->f->n_face = size_f;
+    main_data->f->faces = (t_face**)malloc(sizeof(t_face*) * size_f);
+    i = 0;
     set_data_f(filename, "f ", main_data->f);
-
-    printf("%d\n", main_data->f[2].verts[0]);
+    printf("set_data_f end; | %d \n", main_data->f->n_face);
 
     printf("# v# %d f# %d\n", size_v, size_f);
+}
+
+t_main      *init_data(int width, int height) {
+    t_main  *data;
+
+    if ((data = (t_main*)malloc(sizeof(t_main))) == NULL) {
+        printf("%s\n", "false malloc");
+    }
+
+    data->data = (unsigned char*)malloc(sizeof(unsigned char) * (height * width * bytesPerPixel));
+    data->v = (t_v*)malloc(sizeof(t_v));
+    data->f = (t_f*)malloc(sizeof(t_f));
+    data->par = (t_par*)malloc(sizeof(t_par));
+    data->par->height = height;
+    data->par->width = width;
+
+    return (data);
 }
 
 int main(int argc, char** argv) 
@@ -138,12 +165,9 @@ int main(int argc, char** argv)
     t_main  *main_data;
 
     printf("%s\n", "--------------- Start   program ---------------");
-    if ((main_data = (t_main*)malloc(sizeof(t_main))) == NULL) {
-        printf("%s\n", "false malloc");
-    }
-    pointer_struct_creater();
+    main_data = init_data(1920, 1080);
     parser(argv[1], main_data);
-    createImage(1920, 1080, main_data);
+    createImage(main_data);
     printf("%s\n", "--------------- End     program ---------------");
     return 0;
 }
