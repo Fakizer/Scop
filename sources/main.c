@@ -20,41 +20,33 @@ void    set_data_f(char *filename, char *flag, t_f *f) {
     char    *scene;
     int     size = 0;
     int     fd = 0;
-    int     ret = 0;
     int     i = 0;
     char    **char_vect;
     t_face  *face;
 
     fd = open(filename, O_RDONLY);
     face = (t_face*)malloc(sizeof(t_face));
-    while ((ret = get_next_line(fd, &scene)) > 0)
+    while (get_next_line(fd, &scene) > 0)
 	{
-        // printf("%s\n", scene);
-        if (ft_strstr(scene, flag)) {
+        if (ft_strstr(scene, flag)) 
+        {
             char_vect = ft_strsplit(scene, ' ');
             face->n_verts = ft_words(scene, ' ') - 1;
             face->verts = (int*)malloc(sizeof(int) * face->n_verts);
             int j = 0;
             while (j < face->n_verts)
             {
-                face->verts[j] = atoi(char_vect[j+1]);
+                face->verts[j] = atoi(char_vect[j+1]) - 1;
+                printf("%d | ", face->verts[j]);
                 j++;
             }
-            printf("%d | %d | %d \n", face->verts[0], face->verts[1], face->verts[2]);
+            printf("\n\n");
             f->faces[i] = face;
-            free(face->verts);
-            j = 0;
-            while (j < face->n_verts + 1) 
-            {
-                free(char_vect[j]);
-                j++;
-            }
-            free(char_vect);
-            printf("------------------------1 | %d | %d\n", i, face->n_verts);
             i++;
         }
 		free(scene);
 	}
+    printf("------------------------1 | %d\n", i);
     if (scene != NULL) {
         free(scene);
     }
@@ -65,13 +57,12 @@ void    set_data_v(char *filename, char *flag, t_v *v) {
     char    *scene;
     int     size = 0;
     int     fd = 0;
-    int     ret = 0;
     int     i = 0;
     char    **char_vect;
     t_vert *vert;
 
     fd = open(filename, O_RDONLY);
-    while ((ret = get_next_line(fd, &scene)) > 0)
+    while (get_next_line(fd, &scene) > 0)
 	{
         if (ft_strstr(scene, flag)) {
             char_vect = ft_strsplit(scene, ' ');
@@ -85,11 +76,11 @@ void    set_data_v(char *filename, char *flag, t_v *v) {
                 j++;
             }
             v->verts[i] = vert;
-            // printf("------------------------1 | %d | %d\n", i, vert->n_dots);
             i++;
         }
 		free(scene);
 	}
+    printf("------------------------1 | %d\n", i);
     if (scene != NULL) {
         free(scene);
     }
@@ -130,7 +121,7 @@ void    parser(char *filename, t_main  *main_data) {
     main_data->v->verts = (t_vert**)malloc(sizeof(t_vert*) * size_v);
     int i = 0;
     set_data_v(filename, "v ", main_data->v);
-    printf("set_data_v end;\n");
+    printf("set_data_v end; | %d\n", main_data->v->n_vert);
 
     printf("set_data_f start;\n");
     size_f = counter(filename, "f ");
@@ -138,7 +129,7 @@ void    parser(char *filename, t_main  *main_data) {
     main_data->f->faces = (t_face**)malloc(sizeof(t_face*) * size_f);
     i = 0;
     set_data_f(filename, "f ", main_data->f);
-    printf("set_data_f end; | %d \n", main_data->f->n_face);
+    printf("set_data_f end; | %d\n", main_data->f->n_face);
 
     printf("# v# %d f# %d\n", size_v, size_f);
 }
@@ -165,7 +156,7 @@ int main(int argc, char** argv)
     t_main  *main_data;
 
     printf("%s\n", "--------------- Start   program ---------------");
-    main_data = init_data(1920, 1080);
+    main_data = init_data(50, 50);
     parser(argv[1], main_data);
     createImage(main_data);
     printf("%s\n", "--------------- End     program ---------------");

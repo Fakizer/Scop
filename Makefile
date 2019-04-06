@@ -92,6 +92,6 @@ clean:
 	rm -rf $(OBJLIB) $(OBJDIRL) $(OBJSCO) $(OBJDIRS)
 
 fclean: clean
-	rm -f $(NAME) $(LIBFT)
+	rm -f $(NAME) $(LIBFT) bitmapImage.bmp
 
 re: fclean all

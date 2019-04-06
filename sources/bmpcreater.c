@@ -2,19 +2,25 @@
 
 void    setter(int x, int y, t_main *main_data, unsigned char *data_color)
 {
+    // printf("setter();\n");
+
     int width = main_data->par->width;
     int height = main_data->par->height;
 
-    if (!main_data->data || x<0 || y<0 || x>=width || y>=height) {
+    if (!main_data->data || x < 0 || y < 0 || x >= width || y >= height) {
 		return ;
 	}
-    ft_memcpy(main_data->data+(x+y*width)*bytesPerPixel, data_color, bytesPerPixel);
+    printf("x: %d | y: %d\n", x, y);
+    ft_memcpy(main_data->data + (x + y * width) * bytesPerPixel, data_color, bytesPerPixel);
+    // memcpy(main_data->data+(x+y*width)*bytesPerPixel, data_color, bytesPerPixel);
 }
 
 void    line(int x0, int y0, int x1, int y1, t_main *main_data, unsigned char *data_color)
 {
+    // printf("line();\n");
+
     int steep = 0;
-    if (abs(x0-x1)<abs(y0-y1)) {
+    if (abs(x0 - x1) < abs(y0 - y1)) {
         int x = x0;
         x0 = y0;
         y0 = x;
@@ -25,7 +31,7 @@ void    line(int x0, int y0, int x1, int y1, t_main *main_data, unsigned char *d
         // swap(x1, y1);
         steep = 1;
     }
-    if (x0>x1) {
+    if (x0 > x1) {
         int y = x0;
         x0 = x1;
         x1 = y;
@@ -36,9 +42,11 @@ void    line(int x0, int y0, int x1, int y1, t_main *main_data, unsigned char *d
         // swap(y0, y1);
     }
 
-    for (int x=x0; x<=x1; x++) {
-        float t = (x-x0)/(float)(x1-x0);
-        int y = y0*(1.-t) + y1*t;
+    // printf("-- x0: %d | y0: %d | x1: %d | y1: %d\n", x0, y0, x1, y1);
+
+    for (int x = x0; x <= x1; x++) {
+        float t = (x - x0) / (float)(x1 - x0);
+        int y = y0 * (1.0 - t) + y1 * t;
         if (steep == 1) {
             setter(y, x, main_data, data_color);
         } else {
@@ -55,27 +63,30 @@ void createImage(t_main *main_data)
     data_color = (unsigned char*)malloc(sizeof(unsigned char) * bytesPerPixel);
 
     int y,x;
-    // for(y=0; y<height; y++){
-    //     for(x=0; x<width; x++){
-            int i = 0;    
-            while (i < bytesPerPixel)
-            {
+
+    printf("createImage();\n");
+    // t_par *par = main_data->par;
+    // for(y=0; y<par->height; y++){
+    //     for(x=0; x<par->width; x++){
+    //         int i = 0;    
+    //         while (i < bytesPerPixel)
+    //         {
                 data_color[2] = (unsigned char)255;
                 data_color[1] = (unsigned char)255;
                 data_color[0] = (unsigned char)255;
                 // data_color[2] = (unsigned char)((double)y/main_data->par->height*255); ///red
                 // data_color[1] = (unsigned char)((double)x/main_data->par->width*255); ///green
                 // data_color[0] = (unsigned char)(((double)y+x)/(main_data->par->height+main_data->par->width)*255); ///blue
-                i++;
-            }
-    //         ft_memcpy(data+(x+y*width)*bytesPerPixel, data_c, bytesPerPixel);
+    //             i++;
+    //         }
+    //         ft_memcpy(main_data->data+(x+y*par->width)*bytesPerPixel, data_color, bytesPerPixel);
     //     }
     // }
 
     t_par *par = main_data->par;
     t_f *f = main_data->f;
     t_v *v = main_data->v;
-    t_face *qwe = f->faces[i];
+    printf("---------------1 | %d\n", f->n_face);
     for (int i=0; i < f->n_face; i++) {
         t_face *face = f->faces[i];
         // printf("---------------1 | %d | %d\n", f->n_face, i);
@@ -87,14 +98,19 @@ void createImage(t_main *main_data)
             // printf("---------------11 | %d | %d | %d | %d\n", f->n_face, i, face->n_verts, j);
 
             t_vert *v0 = v->verts[face->verts[j]];
-            t_vert *v1 = v->verts[face->verts[(j + 1) % face->n_verts]];
+            // t_vert *v1 = v->verts[face->verts[(j + 1) % face->n_verts]];
+            t_vert *v1 = v->verts[face->verts[(j + 1) % 3]];
 
-            int x0 = (v0->dots[0]+1.)*par->width/2.;
-            int y0 = (v0->dots[1]+1.)*par->height/2.;
-            int x1 = (v1->dots[0]+1.)*par->width/2.;
-            int y1 = (v1->dots[1]+1.)*par->height/2.;
+
+            int x0 = (v0->dots[0]+1.0)*par->width/2.0;
+            int y0 = (v0->dots[1]+1.0)*par->height/2.0;
+            int x1 = (v1->dots[0]+1.0)*par->width/2.0;
+            int y1 = (v1->dots[1]+1.0)*par->height/2.0;
+
+            // printf("x0: %d | y0: %d | x1: %d | y1: %d\n", x0, y0, x1, y1);
             
             line(x0, y0, x1, y1, main_data, data_color);
+            // line(22, 155, 1, 1, main_data, data_color);
 
             // printf("---------------12 | %d | %d | %d | %d\n", f->n_face, i, face->n_verts, j);
         }
