@@ -12,6 +12,16 @@ t_vect3f		negative_vect3f(t_vect3f vect)
 	return (vcopy);
 }
 
+t_vect3f		vectmult_vect3f(t_vect3f vect, float scalar)
+{
+	t_vect3f vcopy;
+
+	vcopy.x = vect.x * scalar;
+	vcopy.y = vect.y * scalar;
+	vcopy.z = vect.z * scalar;
+	return (vcopy);
+}
+
 t_vect3f		vectadd_vect3f(t_vect3f vect, t_vect3f v)
 {
 	t_vect3f	vcopy;
@@ -81,5 +91,37 @@ t_vect2i		vectmult_vect2i(t_vect2i vect, float scalar)
 
 	vcopy.x = vect.x * scalar;
 	vcopy.y = vect.y * scalar;
+	return (vcopy);
+}
+
+/*vect3i*/
+
+t_vect3i		negative_vect3i(t_vect3i vect)
+{
+	t_vect3i vcopy;
+
+	vcopy.x = -vect.x;
+	vcopy.y = -vect.y;
+	vcopy.z = -vect.z;
+	return (vcopy);
+}
+
+t_vect3i		vectadd_vect3i(t_vect3i vect, t_vect3i v)
+{
+	t_vect3i	vcopy;
+
+	vcopy.x = vect.x + v.x;
+	vcopy.y = vect.y + v.y;
+	vcopy.z = vect.z + v.z;
+	return (vcopy);
+}
+
+t_vect3i		vectmult_vect3i(t_vect3i vect, float scalar)
+{
+	t_vect3i vcopy;
+
+	vcopy.x = vect.x * scalar;
+	vcopy.y = vect.y * scalar;
+	vcopy.z = vect.z * scalar;
 	return (vcopy);
 }

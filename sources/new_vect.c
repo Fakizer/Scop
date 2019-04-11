@@ -29,6 +29,16 @@ t_vect3f        *new_vect3f(float x, float y, float z)
     return vect;
 }
 
+t_vect3f        copy_vect3f(float x, float y, float z)
+{
+    t_vect3f vect;
+
+    vect.x = x;
+    vect.y = y;
+    vect.z = z;
+    return vect;
+}
+
 t_vect3i        new_vect3i(int x, int y, int z)
 {
     t_vect3i vect;

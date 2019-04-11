@@ -20,18 +20,25 @@ const int infoHeaderSize = 40;
 
 t_main      *init_data(int width, int height) {
     t_main  *data;
+    int i;
 
     if ((data = (t_main*)malloc(sizeof(t_main))) == NULL) {
         printf("%s\n", "false malloc");
     }
-
     data->data = (unsigned char*)malloc(sizeof(unsigned char) * (height * width * bytesPerPixel));
     data->v = (t_v*)malloc(sizeof(t_v));
     data->f = (t_f*)malloc(sizeof(t_f));
     data->par = (t_par*)malloc(sizeof(t_par));
     data->par->height = height;
     data->par->width = width;
-
+    data->par->depth  = 255;
+    data->zbuff = (int*)malloc(sizeof(int) * (height * width));
+    i = 0;
+    while (i < (height * width))
+    {
+        data->zbuff[i] = -2147483648;
+        i++;
+    }
     return (data);
 }
 

@@ -56,6 +56,7 @@ typedef struct  s_par
 {
     int         width;
     int         height;
+    int         depth;
 }               t_par;
 
 
@@ -65,6 +66,7 @@ typedef struct  s_main
     t_par       *par;
     t_v         *v;
     t_f         *f;
+    int         *zbuff;
 }               t_main;
 
 
@@ -91,6 +93,7 @@ void    set_data_f(char *filename, char *flag, t_f *f);
 
 /*math.c*/
 t_vect3f		negative_vect3f(t_vect3f vect);
+t_vect3f		vectmult_vect3f(t_vect3f vect, float scalar);
 t_vect3f		vectadd_vect3f(t_vect3f vect, t_vect3f v);
 t_vect3f		crossproduct_vect3f(t_vect3f vect, t_vect3f v);
 t_vect3f		normalize_vect3f(t_vect3f vect);
@@ -100,5 +103,10 @@ float		    dotproduct_vect3f(t_vect3f ray, t_vect3f normal);
 t_vect2i		negative_vect2i(t_vect2i vect);
 t_vect2i		vectadd_vect2i(t_vect2i vect, t_vect2i v);
 t_vect2i		vectmult_vect2i(t_vect2i vect, float scalar);
+
+t_vect3i		negative_vect3i(t_vect3i vect);
+t_vect3i		vectadd_vect3i(t_vect3i vect, t_vect3i v);
+t_vect3i		vectmult_vect3i(t_vect3i vect, float scalar);
+
 
 #endif

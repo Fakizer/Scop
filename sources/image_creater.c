@@ -14,11 +14,11 @@ void    setter(int x, int y, t_main *main_data, unsigned char *data_color)
 
     if (data_color[0] == 0 && data_color[1] == 0 && data_color[2] == 0)
     {
-        // if (x < width && x > 300)
-        // {
-        //     if (y < height && y > 300)
+        if (x < width && x > 300)
+        {
+            if (y < height && y > 300)
                 printf("9 ebal\n");
-        // }
+        }
     }
     // printf("x: %d | y: %d | r: %hu | g: %hu | b: %hu\n", x, y, data_color[0], data_color[1], data_color[2]);
     ft_memcpy(main_data->data + (x + y * width) * bytesPerPixel, data_color, bytesPerPixel);
@@ -67,25 +67,51 @@ void    line(int x0, int y0, int x1, int y1, t_main *main_data, unsigned char *d
     }
 }
 
-void    swap_vect2i(t_vect2i *t1, t_vect2i *t2)
+void    swap_vect3i(t_vect3i *t1, t_vect3i *t2)
 {
-    t_vect2i buff;
+    t_vect3i buff;
 
     buff = *t1;
     *t1 = *t2;
     *t2 = buff;
 }
 
-void    triangle(t_vect2i t0, t_vect2i t1, t_vect2i t2, t_main *main_data, unsigned char *data_color)
+t_vect3i        calculate_b(t_vect3i t0, t_vect3i t1, t_vect3i t2, int i, int total_height)
+{
+    int second_half = 0;
+    int segment_height = 0;
+
+    if (i > (t1.y - t0.y) || t1.y == t0.y)
+            second_half = 1;
+    segment_height = second_half == 1 ? t2.y - t1.y : t1.y - t0.y;
+    float alpha = (float)i / (float)total_height;
+    float beta  = (float)(i - (second_half == 1 ? t1.y - t0.y : 0)) / (float)segment_height;
+
+    t_vect3f t0_f = copy_vect3f(t0.x, t0.y, t0.z); 
+    t_vect3f t1_f = copy_vect3f(t1.x, t1.y, t1.z);
+    t_vect3f t2_f = copy_vect3f(t2.x, t2.y, t2.z);
+
+    t_vect3f A_f = vectadd_vect3f(t0_f, vectmult_vect3f(vectadd_vect3f(t2_f, negative_vect3f(t0_f)), alpha));
+    t_vect3i A = new_vect3i(A_f.x, A_f.y, A_f.z);
+
+    t_vect3f B_buff1_f = vectadd_vect3f(t1_f, vectmult_vect3f(vectadd_vect3f(t2_f, negative_vect3f(t1_f)), beta));
+    t_vect3i B_buff1 = new_vect3i(B_buff1_f.x, B_buff1_f.y, B_buff1_f.z);
+
+    t_vect3f B_buff2_f = vectadd_vect3f(t0_f, vectmult_vect3f(vectadd_vect3f(t1_f, negative_vect3f(t0_f)), beta));
+    t_vect3i B_buff2 = new_vect3i(B_buff2_f.x, B_buff2_f.y, B_buff2_f.z);
+    return (second_half == 1 ? B_buff1 : B_buff2);
+}
+
+void    triangle(t_vect3i t0, t_vect3i t1, t_vect3i t2, t_main *main_data, unsigned char *data_color)
 {
     if (t0.y==t1.y && t0.y==t2.y) 
         return;
     if (t0.y>t1.y) 
-        swap_vect2i(&t0, &t1);
+        swap_vect3i(&t0, &t1);
     if (t0.y>t2.y) 
-        swap_vect2i(&t0, &t2);
+        swap_vect3i(&t0, &t2);
     if (t1.y>t2.y) 
-        swap_vect2i(&t1, &t2);
+        swap_vect3i(&t1, &t2);
     
     int total_height = t2.y-t0.y;
 
@@ -100,29 +126,52 @@ void    triangle(t_vect2i t0, t_vect2i t1, t_vect2i t2, t_main *main_data, unsig
         float alpha = (float)i / (float)total_height;
         float beta  = (float)(i - (second_half == 1 ? t1.y - t0.y : 0)) / (float)segment_height; // be careful: with above conditions no division by zero here
         
-        t_vect2i A = vectadd_vect2i(t0, vectmult_vect2i(vectadd_vect2i(t2, negative_vect2i(t0)), alpha));
-        t_vect2i B_buff1 = vectadd_vect2i(t1, vectmult_vect2i(vectadd_vect2i(t2, negative_vect2i(t1)), beta));
-        t_vect2i B_buff2 = vectadd_vect2i(t0, vectmult_vect2i(vectadd_vect2i(t1, negative_vect2i(t0)), beta));
+        t_vect3f t0_f = copy_vect3f(t0.x, t0.y, t0.z); 
+        t_vect3f t1_f = copy_vect3f(t1.x, t1.y, t1.z);
+        t_vect3f t2_f = copy_vect3f(t2.x, t2.y, t2.z);
 
-        t_vect2i B = second_half == 1 ? B_buff1 : B_buff2;
+        t_vect3f A_f = vectadd_vect3f(t0_f, vectmult_vect3f(vectadd_vect3f(t2_f, negative_vect3f(t0_f)), alpha));
+        t_vect3i A = new_vect3i(A_f.x, A_f.y, A_f.z);
 
-        if (A.x > B.x) {
-            printf("first------------A.x: %d | A.y: %d\n", A.x, A.y);
-            printf("first------------B.x: %d | B.y: %d\n", B.x, B.y);
-            printf("--------------------------------\n");
+        t_vect3f B_buff1_f = vectadd_vect3f(t1_f, vectmult_vect3f(vectadd_vect3f(t2_f, negative_vect3f(t1_f)), beta));
+        t_vect3i B_buff1 = new_vect3i(B_buff1_f.x, B_buff1_f.y, B_buff1_f.z);
 
-            swap_vect2i(&A, &B);
+        t_vect3f B_buff2_f = vectadd_vect3f(t0_f, vectmult_vect3f(vectadd_vect3f(t1_f, negative_vect3f(t0_f)), beta));
+        t_vect3i B_buff2 = new_vect3i(B_buff2_f.x, B_buff2_f.y, B_buff2_f.z);
 
-            printf("second------------A.x: %d | A.y: %d\n", A.x, A.y);
-            printf("second------------B.x: %d | B.y: %d\n\n", B.x, B.y);
-        }
+
+        t_vect3i B = second_half == 1 ? B_buff1 : B_buff2;
+
+
+        if (A.x > B.x)
+            swap_vect3i(&A, &B);
+
         int j = A.x;
+
+        // printf("--------------------41================================= | %d\n", i);
         while(j <= B.x)
         {
-            setter(j, t0.y + i, main_data, data_color);
+            float phi = B.x == A.x ? 1. : (float)(j - A.x) / (float)(B.x - A.x);
+            t_vect3f A_f = copy_vect3f(A.x, A.y, A.z);
+            t_vect3f B_f = copy_vect3f(B.x, B.y, B.z);
+            t_vect3f P_buff = vectadd_vect3f(A_f, vectmult_vect3f(vectadd_vect3f(B_f, negative_vect3f(A_f)), phi));
+            t_vect3i P = new_vect3i(P_buff.x, P_buff.y, P_buff.z);
+            int idx = P.x + P.y * main_data->par->width;
+            // if (idx < main_data->par->width * main_data->par->height)
+            // {
+                // printf("bleatb\n");
+                // printf("--------------------42================================= | %d | %d | %d\n\n", i, j, idx);
+                if (main_data->zbuff[idx] < P.z)
+                {
+                    main_data->zbuff[idx] = P.z;
+                    setter(P.x, P.y, main_data, data_color);
+                    // setter(j, t0.y + i, main_data, data_color);
+                }
+            // }
             j++;
         }
 
+        // printf("--------------------43================================= | %d\n\n", i);
         i++;
     }
 }
@@ -164,18 +213,20 @@ void createImage(t_main *main_data)
     printf("---------------1 | %d\n", modelf->n_face);
     for (int i=0; i < modelf->n_face; i++) {
         t_face *face = modelf->faces[i];
-
-        t_vect2i *screen_coords;
-        screen_coords = (t_vect2i*)malloc(sizeof(t_vect2i) * face->n_verts);
+        printf("---------------1 | %d | %d\n", i, modelf->n_face);
+        t_vect3i *screen_coords;
+        screen_coords = (t_vect3i*)malloc(sizeof(t_vect3i) * face->n_verts);
         t_vect3f *world_coords;
         world_coords = (t_vect3f*)malloc(sizeof(t_vect3f) * face->n_verts);
+
 
         for (int j=0; j<face->n_verts; j++) {
 
             t_vect3f *v = modelv->verts[face->verts[j]];
 
-            screen_coords[j] = new_vect2i((v->x + 1.) * par->width/2., 
-                                            (v->y + 1.) * par->height/2.);
+            screen_coords[j] = new_vect3i((v->x + 1.) * (float)par->width / 2., 
+                                            (v->y + 1.) * (float)par->height / 2., 
+                                            (v->z + 1.) * (float)par->depth / 2.);
             world_coords[j] = (*v);
 
             // t_vect3f *v0 = modelv->verts[face->verts[j]];
@@ -190,17 +241,15 @@ void createImage(t_main *main_data)
         }
 
         t_vect3f n = crossproduct_vect3f(vectadd_vect3f(world_coords[2], negative_vect3f(world_coords[0])), 
-                                    vectadd_vect3f(world_coords[1], negative_vect3f(world_coords[0])));
+                                        vectadd_vect3f(world_coords[1], negative_vect3f(world_coords[0])));
         
-        // printf("%f | %f | %f\n", n.x, n.y, n.z);
         n = normalize_vect3f(n);
-        // printf("%f | %f | %f\n", n.x, n.y, n.z);
 
         float intensity = dotproduct_vect3f(n, (*light_dir));
 
-        // printf("-------| %f |-------\n\n", intensity);
-
         if (intensity > 0) {
+            // t_vect2i *uv;
+            // uv = (t_vect2i*)malloc(sizeof(t_vect2i) * 3);
             data_color[2] = (unsigned char)255 * intensity;
             data_color[1] = (unsigned char)255 * intensity;
             data_color[0] = (unsigned char)255 * intensity;
