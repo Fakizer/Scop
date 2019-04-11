@@ -16,11 +16,15 @@ LIBFT	=	libft.a
 GCC		=	gcc
 WWW		=	
 			# -Wall -Wextra -Werror
+
+FLAGS	=	
+# -fsanitize=address
 IGRAPH	=	
 			# -L/usr/local/lib/ -I/usr/local/include -lmlx -framework OpenGL \
 			# -framework AppKit
 
-SRCSCO	=	main.c bmpcreater.c
+SRCSCO	=	bmpcreater.c image_creater.c main.c new_vect.c parser.c \
+			math_scop.c 
 
 SRCLIB	=	ft_memset.c ft_memcpy.c ft_memchr.c ft_memcmp.c \
 			ft_strcmp.c ft_bzero.c ft_memmove.c ft_strlen.c \
@@ -52,7 +56,7 @@ SRCDIR	=	./sources/
 # all: $(NAME)
 
 # $(NAME): 	$(OBJDIRS) $(OBJSCO)
-# 			$(GCC) -o $@ $(IGRAPH) $(OBJSCO) $(LIBFT)
+# 			$(GCC) $(FLAGS) -o $@ $(IGRAPH) $(OBJSCO) $(LIBFT) -lm
 
 # $(OBJDIRS):
 # 			mkdir -p $@
@@ -71,7 +75,7 @@ SRCDIR	=	./sources/
 all: $(NAME)
 
 $(NAME):	$(LIBFT) $(OBJDIRS) $(OBJSCO)
-			$(GCC) -o $@ $(IGRAPH) $(OBJSCO) $(LIBFT)
+			$(GCC) $(FLAGS) -o $@ $(IGRAPH) $(OBJSCO) $(LIBFT) -lm
 
 $(LIBFT):	$(OBJDIRL) $(OBJLIB)
 			ar rc $(LIBFT) $(OBJLIB)

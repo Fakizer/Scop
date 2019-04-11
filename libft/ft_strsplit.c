@@ -51,7 +51,6 @@ char	**ft_strsplit(char const *s, char c)
 	tab = (char**)malloc(sizeof(char*) * (ft_words(s, c)));
 	if (tab == NULL)
 		return (0);
-	tab[ft_words(s, c)] = NULL;
 	while (*s)
 	{
 		while (*s && *s == c)
