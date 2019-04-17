@@ -48,6 +48,7 @@ t_vect3f		normalize_vect3f(t_vect3f vect)
 	t_vect3f vcopy;
 
 	magn = magnitude_vect3f(vect);
+	// printf("%f\n", magn);
 	vcopy.x = vect.x / magn;
 	vcopy.y = vect.y / magn;
 	vcopy.z = vect.z / magn;

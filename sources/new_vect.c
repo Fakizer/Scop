@@ -48,3 +48,13 @@ t_vect3i        new_vect3i(int x, int y, int z)
     vect.z = z;
     return vect;
 }
+
+t_vect3i        vect3f2vect3i(int x, int y, int z)
+{
+    t_vect3i vect;
+
+    vect.x = x + 0.5;
+    vect.y = y + 0.5;
+    vect.z = z + 0.5;
+    return vect;
+}

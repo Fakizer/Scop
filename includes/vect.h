@@ -32,6 +32,7 @@ t_vect2i        new_vect2i(int x, int y);
 t_vect3f        *new_vect3f(float x, float y, float z);
 t_vect3f        copy_vect3f(float x, float y, float z);
 t_vect3i        new_vect3i(int x, int y, int z);
+t_vect3i        vect3f2vect3i(int x, int y, int z);
 
 
 #endif

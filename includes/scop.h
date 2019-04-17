@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "vect.h"
+# include "matrix.h"
 
 # include <fcntl.h>
 # include <sys/types.h>
@@ -26,12 +27,12 @@
 # include <stdio.h>
 # include <time.h>
 
-
-
 typedef struct  s_face
 {
     int         n_verts;
     int         *verts;
+    int         *uv;
+    int         *norms;
 }               t_face;
 
 typedef struct  s_f
@@ -45,6 +46,19 @@ typedef struct  s_f
 //     int         n_dots;
 //     float       *dots;
 // }               t_vert;
+
+typedef struct  s_vt
+{
+    int         n_uv;
+    t_vect3f    **uv;
+}               t_vt;
+
+typedef struct  s_vn
+{
+    int         n_norms;
+    t_vect3f    **norms;
+}               t_vn;
+
 
 typedef struct  s_v
 {
@@ -65,14 +79,17 @@ typedef struct  s_main
     unsigned char *data;
     t_par       *par;
     t_v         *v;
+    t_vn        *vn;
+    t_vt        *vt;
     t_f         *f;
-    int         *zbuff;
+    float       *zbuff;
 }               t_main;
 
 
 extern const int bytesPerPixel; /// red, green, blue
 extern const int fileHeaderSize;
 extern const int infoHeaderSize;
+extern const int depth;
 
 /*image_creater.c*/
 void            createImage(t_main *data);

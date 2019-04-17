@@ -24,7 +24,7 @@ IGRAPH	=
 			# -framework AppKit
 
 SRCSCO	=	bmpcreater.c image_creater.c main.c new_vect.c parser.c \
-			math_scop.c 
+			math_scop.c new_matrix.c
 
 SRCLIB	=	ft_memset.c ft_memcpy.c ft_memchr.c ft_memcmp.c \
 			ft_strcmp.c ft_bzero.c ft_memmove.c ft_strlen.c \
